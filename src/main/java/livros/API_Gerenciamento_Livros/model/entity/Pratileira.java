@@ -1,5 +1,6 @@
 package livros.API_Gerenciamento_Livros.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +25,11 @@ public class Pratileira {
 
     @ManyToOne
     @JoinColumn(name = "estante_id")
+    @JsonBackReference
     private Estante estante;
 
     @OneToMany(mappedBy = "pratileira")
+    @JsonBackReference
     private List<CopiaLivro> copiaLivros;
 
     public Pratileira(Integer identificacao, Estante estante) {

@@ -1,5 +1,7 @@
 package livros.API_Gerenciamento_Livros.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +14,6 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
 public class Autor {
 
     @Id
@@ -28,7 +29,8 @@ public class Autor {
     @Column(nullable = false, length = 60)
     private String pais;
 
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Livro> livros;
 
     public Autor(Integer autorId, String nome, String descricao, String pais, List<Livro> livros) {
@@ -37,5 +39,8 @@ public class Autor {
         this.descricao = descricao;
         this.pais = pais;
         this.livros = livros;
+    }
+
+    public Autor() {
     }
 }

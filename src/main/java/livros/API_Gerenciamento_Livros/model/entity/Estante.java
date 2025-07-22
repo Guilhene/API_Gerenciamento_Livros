@@ -1,5 +1,7 @@
 package livros.API_Gerenciamento_Livros.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +26,15 @@ public class Estante {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "livro_id")
+    @JsonBackReference
     private Livro livro;
 
     @OneToMany(mappedBy = "estante")
+    @JsonBackReference
     private List<CopiaLivro> copiaLivros;
 
-    @OneToMany(mappedBy = "estante")
+    @OneToMany(mappedBy = "estante", cascade =  CascadeType.ALL)
+    @JsonManagedReference
     private List<Pratileira> pratileiras;
 
     public Estante(Integer estanteId, String areaAtuacao, Livro livro) {

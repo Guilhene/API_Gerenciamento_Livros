@@ -1,5 +1,7 @@
 package livros.API_Gerenciamento_Livros.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import livros.API_Gerenciamento_Livros.Service.CadastroService;
 import livros.API_Gerenciamento_Livros.model.DTO.AuthenticatioDTO;
@@ -22,18 +24,21 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/biblioteca")
+@Tag(name = "Cadastro e Login", description = "Operação de cadostro de usuário e autenticacação do usuário.")
 public class CadastroController {
 
     @Autowired
     private CadastroService cadastroService;
 
     @PostMapping("/login")
+    @Operation(summary = "Autenticação do usuario.", description = "Vai fazer uma requisição, uma requisição no servidor de autenticação, retorna o token do usuário.")
     public ResponseEntity login(@RequestBody @Valid LoginDTO loginDTO) {
         var token = cadastroService.loginUsuario(loginDTO);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/createrUser")
+    @Operation(summary = "Cadastro do usuário.", description = "Vai fazer o cadastro do usuário e salva os dados no banco de dados e o password va ser cryptography")
     public ResponseEntity cadastro(@RequestBody @Valid CadastroDTO dto) {
         var newUsuario = cadastroService.cadastroUsuario(dto);
         return ResponseEntity.created(URI.create("/biblioteca/createrUser")).body(newUsuario);
