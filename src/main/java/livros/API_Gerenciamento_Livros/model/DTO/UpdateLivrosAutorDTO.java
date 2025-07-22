@@ -5,17 +5,12 @@ import jakarta.validation.constraints.Min;
 
 import java.util.Date;
 
-public record LivroDTO(
+public record UpdateLivrosAutorDTO(
         String titulo,
         String descricao,
         String tema,
         Integer volume,
         Date dataCriacao,
-        String areaAtuacao,
-        @Min(value =  1, message = "Nao poder ser negativo")
-        @Max(value = 4, message = "A quantidade maxima de pratileira e 4.")
-        Integer identificacao
+        String areaAtuacao
 ) {
 }
-
-

@@ -1,5 +1,7 @@
 package livros.API_Gerenciamento_Livros.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,21 +39,23 @@ public class Livro {
     @Column(nullable = false, length = 60)
     private String areaAtuacao;
 
-    @OneToMany(mappedBy = "livro")
+    @OneToMany(mappedBy = "livro",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<CopiaLivro> copiaLivros;
 
     @ManyToOne
     @JoinColumn(name = "autor_id")
+    @JsonBackReference
     private Autor autor;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "livro")
-    @JoinColumn(name = "estante_id")
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "livro")
+    @JsonManagedReference
     private Estante estante;
 
     public Livro() {
     }
 
-    public Livro(Integer livroId, String titulo, String descricao, String tema, int volume, Date dataCriacao, String areaAtuacao, Autor autor, Estante estante) {
+    public Livro(Integer livroId, String titulo, String descricao, String tema, int volume, Date dataCriacao, String areaAtuacao, Autor autor, Estante estante, List<CopiaLivro> copiaLivros) {
         this.livroId = livroId;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -61,5 +65,6 @@ public class Livro {
         this.areaAtuacao = areaAtuacao;
         this.autor = autor;
         this.estante = estante;
+        this.copiaLivros = copiaLivros;
     }
 }

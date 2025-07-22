@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "usuario")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "usuarioId")
 public class Usuario implements UserDetails {
 
     @Id

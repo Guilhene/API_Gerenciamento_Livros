@@ -28,6 +28,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(autho -> autho
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/biblioteca/createrUser").permitAll()
                         .requestMatchers(HttpMethod.POST, "/biblioteca/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/biblioteca/addLivro").hasRole("ADMIN")
